@@ -1,0 +1,1 @@
+Hourly time tracker CLI
