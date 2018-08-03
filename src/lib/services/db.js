@@ -90,7 +90,7 @@ sql
 
 // Billable.create({ startTime: Date.now() }).then(isCurrentBillable());
 
-calculateBillable();
+// calculateBillable();
 
 // const startBillable = async () => {};
 
