@@ -70,9 +70,8 @@ const stopBillable = async (id, time = Date.now()) => {
 const calculateBillable = async () => {
   const currentBillable = await isCurrentBillable();
 
-  if (currentBillable.ok) {
-    return { ok: false };
-  }
+  if (currentBillable.ok) return { ok: false };
+
   const allBillables = await Billable.findAll();
   const minutes = allBillables
     .map((billable) => Math.ceil(billable.get('totalTime') / 60000));
