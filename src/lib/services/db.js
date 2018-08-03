@@ -71,11 +71,13 @@ const calculateBillable = async () => {
   const currentBillable = await isCurrentBillable();
 
   if (currentBillable.ok) {
-    console.log(chalk.yellow('You have a current timer running. Please end the timer to calculate hours.'));
-    process.exit(0);
+    return { ok: false };
   }
   const allBillables = await Billable.findAll();
-  return allBillables.map((billable) => Math.ceil(billable.get('totalTime') / 60000));
+  const minutes = allBillables
+    .map((billable) => Math.ceil(billable.get('totalTime') / 60000));
+
+  return { ok: true, minutes };
 };
 
 const endBillablePeriod = async () => {
@@ -88,8 +90,10 @@ sql
     console.log(chalk.red('SQLite error', error));
   });
 
-module.exports.isCurrentBillable = isCurrentBillable;
-module.exports.stopBillable = stopBillable;
-module.exports.startBillable = startBillable;
-module.exports.calculateBillable = calculateBillable;
-module.exports.endBillablePeriod = endBillablePeriod;
+module.exports = {
+  isCurrentBillable,
+  stopBillable,
+  startBillable,
+  calculateBillable,
+  endBillablePeriod,
+};
