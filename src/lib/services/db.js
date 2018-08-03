@@ -22,21 +22,18 @@ sql
 //  MODELS
 const Billable = sql.define('billable_hours', {
   startTime: {
-    type: Sequelize.DATE,
+    type: Sequelize.INTEGER,
     allowNull: false,
-    get() {
-      return this.getDataValue('startTime');
-    },
   },
   endTime: {
-    type: Sequelize.DATE,
+    type: Sequelize.INTEGER,
     allowNull: true,
-    set(val) {
-      this.setDataValue('endTime', val);
-    },
+  },
+  totalTime: {
+    type: Sequelize.INTEGER,
+    allowNull: true,
   },
 });
-
 
 const isCurrentBillable = async () => {
   const currentBillable = await Billable.findOne({
@@ -53,15 +50,32 @@ const isCurrentBillable = async () => {
 };
 
 const startBillable = async () => {
-  Billable.create({ startTime: Date.now() });
+  const startTime = Date.now();
+  Billable.create({ startTime });
   return { ok: true };
 };
 
 const stopBillable = async (id, time = Date.now()) => {
   const currentBillable = await Billable.findById(id);
+  const startTime = currentBillable.get('startTime');
+  const endTime = currentBillable.get('endTime');
+  const totalTime = endTime - startTime;
 
   currentBillable.set('endTime', time);
+  currentBillable.set('totalTime', totalTime);
   currentBillable.save();
+};
+
+const calculateBillable = async () => {
+  const currentBillable = await isCurrentBillable();
+
+  if (currentBillable.ok) {
+    console.log(chalk.yellow('You have a current timer running. Please end the timer to calculate hours.'));
+    process.exit(0);
+  }
+  const allBillables = await Billable.findAll();
+  const allTotalTimes = allBillables.map((billable) => Math.ceil(billable.get('totalTime') / 60000));
+  console.log(allTotalTimes);
 };
 
 sql
@@ -76,6 +90,7 @@ sql
 
 // Billable.create({ startTime: Date.now() }).then(isCurrentBillable());
 
+calculateBillable();
 
 // const startBillable = async () => {};
 
@@ -83,3 +98,4 @@ sql
 module.exports.isCurrentBillable = isCurrentBillable;
 module.exports.stopBillable = stopBillable;
 module.exports.startBillable = startBillable;
+module.exports.calculateBillable = calculateBillable;
