@@ -5,6 +5,7 @@ const { commands } = require('./lib/constants.json');
 const { version } = require('../package.json');
 const { startHandler } = require('./lib/commands/start');
 const { stopHandler } = require('./lib/commands/stop');
+const { reportHandler } = require('./lib/commands/report');
 
 
 // require('./lib/services/configstore');
@@ -33,7 +34,7 @@ program
   .command('report')
   .description(commands.report)
   .action(() => {
-    console.log('report');
+    reportHandler();
   });
 
 program

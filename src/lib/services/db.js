@@ -75,8 +75,7 @@ const calculateBillable = async () => {
     process.exit(0);
   }
   const allBillables = await Billable.findAll();
-  const allTotalTimes = allBillables.map((billable) => Math.ceil(billable.get('totalTime') / 60000));
-  console.log(allTotalTimes);
+  return allBillables.map((billable) => Math.ceil(billable.get('totalTime') / 60000));
 };
 
 sql
