@@ -8,4 +8,6 @@ function minutesToHHMM(mins) {
   return `${hh}:${mm}`;
 }
 
-module.exports.minutesToHHMM = minutesToHHMM;
+module.exports = {
+  minutesToHHMM,
+};

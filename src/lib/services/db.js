@@ -65,6 +65,7 @@ const stopBillable = async (id, time = Date.now()) => {
 
   currentBillable.set('totalTime', totalTime);
   currentBillable.save();
+  return { ok: true };
 };
 
 const calculateBillable = async () => {

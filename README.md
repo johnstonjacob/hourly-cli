@@ -1,6 +1,9 @@
 # Hourly time tracker CLI
+[![npm version](https://badge.fury.io/js/hourly-cli.svg)](https://badge.fury.io/js/hourly-cli)
 
 ## Commands
+hourly - starts or stop billable hours
+
 hourly start - start billable hours
 
 hourly stop - stop billable hours
