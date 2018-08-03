@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const cmd = require('commander');
+const program = require('commander');
 const { commands } = require('./lib/constants.json');
 const { version } = require('../package.json');
 
@@ -8,35 +8,39 @@ const { version } = require('../package.json');
 // require('./lib/services/configstore');
 // require('./lib/services/db');
 
-cmd
+program
   .version(version);
 
-cmd
+program
   .command('start [time]')
   .description(commands.start)
   .action((time) => {
     console.log('start', time);
   });
 
-cmd
+program
   .command('stop [time]')
   .description(commands.stop)
   .action((time) => {
     console.log('stop', time);
   });
 
-cmd
+program
   .command('report')
   .description(commands.report)
   .action(() => {
     console.log('report');
   });
 
-cmd
+program
   .command('end')
   .description(commands.end)
   .action(() => {
     console.log('end');
   });
 
-cmd.parse(process.argv);
+program.parse(process.argv);
+
+if (!program.args.length) {
+  console.log('default');
+}
