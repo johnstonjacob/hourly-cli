@@ -57,11 +57,12 @@ const startBillable = async () => {
 
 const stopBillable = async (id, time = Date.now()) => {
   const currentBillable = await Billable.findById(id);
+  currentBillable.set('endTime', time);
+
   const startTime = currentBillable.get('startTime');
   const endTime = currentBillable.get('endTime');
   const totalTime = endTime - startTime;
 
-  currentBillable.set('endTime', time);
   currentBillable.set('totalTime', totalTime);
   currentBillable.save();
 };
@@ -83,17 +84,6 @@ sql
   .catch((error) => {
     console.log(chalk.red('SQLite error', error));
   });
-
-// isCurrentBillable().then((data) => stopBillable(data.id));
-
-// isCurrentBillable().then(console.log);
-
-// Billable.create({ startTime: Date.now() }).then(isCurrentBillable());
-
-// calculateBillable();
-
-// const startBillable = async () => {};
-
 
 module.exports.isCurrentBillable = isCurrentBillable;
 module.exports.stopBillable = stopBillable;

@@ -3,12 +3,14 @@ const program = require('commander');
 const chalk = require('chalk');
 const { commands } = require('./lib/constants.json');
 const { version } = require('../package.json');
+const { startHandler } = require('./lib/commands/start');
+const { stopHandler } = require('./lib/commands/stop');
 
 
 // require('./lib/services/configstore');
 // require('./lib/services/db');
 
-console.log(chalk.green('Hourly hours tracker'));
+console.log(chalk.green.bold('Hourly hours tracker'));
 
 program
   .version(version);
@@ -16,15 +18,15 @@ program
 program
   .command('start [time]')
   .description(commands.start)
-  .action((time) => {
-    console.log('start', time);
+  .action(() => {
+    startHandler();
   });
 
 program
   .command('stop [time]')
   .description(commands.stop)
-  .action((time) => {
-    console.log('stop', time);
+  .action(() => {
+    stopHandler();
   });
 
 program
