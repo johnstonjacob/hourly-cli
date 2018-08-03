@@ -1,12 +1,14 @@
 #!/usr/bin/env node
 const program = require('commander');
+const chalk = require('chalk');
 const { commands } = require('./lib/constants.json');
 const { version } = require('../package.json');
 
-// const chalk = require('chalk');
 
 // require('./lib/services/configstore');
 // require('./lib/services/db');
+
+console.log(chalk.green('Hourly hours tracker'));
 
 program
   .version(version);
