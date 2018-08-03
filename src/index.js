@@ -1,17 +1,15 @@
 #!/usr/bin/env node
 const program = require('commander');
 const chalk = require('chalk');
-const { commands } = require('./lib/constants.json');
+const { commands, text } = require('./lib/constants.json');
 const { version } = require('../package.json');
 const {
   startHandler, stopHandler, reportHandler, endHandler, defaultHandler,
 } = require('./lib/commands/index');
 
-
 // require('./lib/services/configstore');
-// require('./lib/services/db');
 
-console.log(chalk.green.bold('Hourly hours tracker'));
+console.log(chalk.green.bold(text.splash));
 
 program
   .version(version);
