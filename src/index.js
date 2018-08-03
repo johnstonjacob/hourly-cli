@@ -4,7 +4,7 @@ const chalk = require('chalk');
 const { commands } = require('./lib/constants.json');
 const { version } = require('../package.json');
 const {
-  startHandler, stopHandler, reportHandler, endHandler,
+  startHandler, stopHandler, reportHandler, endHandler, defaultHandler,
 } = require('./lib/commands/index');
 
 
@@ -48,5 +48,5 @@ program
 program.parse(process.argv);
 
 if (!program.args.length) {
-  console.log('default');
+  defaultHandler();
 }
