@@ -3,9 +3,9 @@ const program = require('commander');
 const chalk = require('chalk');
 const { commands } = require('./lib/constants.json');
 const { version } = require('../package.json');
-const { startHandler } = require('./lib/commands/start');
-const { stopHandler } = require('./lib/commands/stop');
-const { reportHandler } = require('./lib/commands/report');
+const {
+  startHandler, stopHandler, reportHandler, endHandler,
+} = require('./lib/commands/index');
 
 
 // require('./lib/services/configstore');
@@ -40,8 +40,9 @@ program
 program
   .command('end')
   .description(commands.end)
-  .action(() => {
-    console.log('end');
+  .action(async () => {
+    await reportHandler();
+    endHandler();
   });
 
 program.parse(process.argv);

@@ -78,6 +78,10 @@ const calculateBillable = async () => {
   return allBillables.map((billable) => Math.ceil(billable.get('totalTime') / 60000));
 };
 
+const endBillablePeriod = async () => {
+  sql.dropSchema('billable_hours');
+};
+
 sql
   .sync()
   .catch((error) => {
@@ -88,3 +92,4 @@ module.exports.isCurrentBillable = isCurrentBillable;
 module.exports.stopBillable = stopBillable;
 module.exports.startBillable = startBillable;
 module.exports.calculateBillable = calculateBillable;
+module.exports.endBillablePeriod = endBillablePeriod;
