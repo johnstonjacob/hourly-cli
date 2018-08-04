@@ -17,8 +17,8 @@ program
 program
   .command('start [time]')
   .description(commands.start)
-  .action(() => {
-    startHandler();
+  .action((time) => {
+    startHandler(time);
   });
 
 program

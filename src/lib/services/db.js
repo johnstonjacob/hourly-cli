@@ -49,8 +49,7 @@ const isCurrentBillable = async () => {
   return { ok: false };
 };
 
-const startBillable = async () => {
-  const startTime = Date.now();
+const startBillable = async (startTime = Date.now()) => {
   Billable.create({ startTime });
   return { ok: true };
 };
