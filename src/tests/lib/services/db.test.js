@@ -1,7 +1,8 @@
 const { expect } = require('chai'); // eslint-disable-line
 
 const {
-  Billable, isCurrentBillable, startBillable, stopBillable, calculateBillable,
+  Billable, isCurrentBillable, startBillable,
+  stopBillable, calculateBillable, endBillablePeriod,
 } = require('../../../lib/services/db');
 
 describe('isCurrentBillable', () => {
@@ -188,5 +189,27 @@ describe('calculateBillable', () => {
 
     const billable = await calculateBillable();
     expect(billable.minutes[0]).to.equal(60);
+  });
+});
+
+describe('endBillablePeriod', async () => {
+  it('should be a function', () => {
+    expect(endBillablePeriod).to.be.a('function');
+  });
+
+  it('should return an object', async () => {
+    expect(await endBillablePeriod()).to.be.a('object');
+  });
+
+  it('should return an object with an ok property', async () => {
+    expect(await endBillablePeriod()).to.have.property('ok');
+  });
+
+  it('should remove all billable_hours rows', async () => {
+    await Billable.create({ startTime: Date.now() });
+    await Billable.create({ startTime: Date.now() });
+
+    await endBillablePeriod();
+    expect(await Billable.count({ where: undefined })).to.equal(0);
   });
 });
