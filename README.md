@@ -7,9 +7,9 @@
 ## Commands
 hourly - starts or stop billable hours
 
-hourly start - start billable hours
+hourly start [time] - start billable hours. [time] is the amount of time since you started working in HH:MM format.
 
-hourly stop - stop billable hours
+hourly stop [time] - stop billable hours. [time] is the amount of time since you stopped working in HH:MM format.
 
 hourly report - prints amount of hours worked in this period
 
