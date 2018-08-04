@@ -16,5 +16,5 @@
     "splash": "Hourly hours tracker"
  },
   "dbName": ".hourly.db",
-  "test-dbName": ".hourly-tests.db"
+  "dbNameTest": ".hourly-tests.db"
 }

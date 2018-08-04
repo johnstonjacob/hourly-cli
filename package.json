@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint src/*",
-    "test": "mocha src/tests/ --recursive",
+    "test": "NODE_ENV=test mocha src/tests/ --recursive",
     "precommit-message": "echo 'Running pre-commit hook'"
   },
   "pre-commit": [
