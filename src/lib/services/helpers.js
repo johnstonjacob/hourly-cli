@@ -9,6 +9,15 @@ function minutesToHHMM(mins) {
   return `${hh}:${mm}`;
 }
 
+function hhmmToMs(hhmm) {
+  const hhmmRegex = /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
+  if (!hhmmRegex.test(hhmm)) return { ok: false };
+
+
+  return { ok: true };
+}
+
 module.exports = {
   minutesToHHMM,
+  hhmmToMs,
 };
