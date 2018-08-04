@@ -24,8 +24,8 @@ program
 program
   .command('stop [time]')
   .description(commands.stop)
-  .action(() => {
-    stopHandler();
+  .action((time) => {
+    stopHandler(time);
   });
 
 program
