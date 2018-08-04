@@ -1,7 +1,7 @@
 const { expect } = require('chai'); // eslint-disable-line
 
 const {
-  Billable, isCurrentBillable, startBillable, stopBillable,
+  Billable, isCurrentBillable, startBillable, stopBillable, calculateBillable,
 } = require('../../../lib/services/db');
 
 describe('isCurrentBillable', () => {
@@ -120,5 +120,73 @@ describe('stopBillable', () => {
     const row = await Billable.find({ where: undefined });
 
     expect(row.get('totalTime')).to.equal(endTime - startTime);
+  });
+});
+
+describe('calculateBillable', () => {
+  beforeEach(async () => {
+    await Billable.destroy({ where: {}, truncate: false });
+  });
+
+  after(async () => {
+    await Billable.destroy({ where: {}, truncate: false });
+  });
+
+  it('should be a function', () => {
+    expect(calculateBillable).to.be.a('function');
+  });
+
+  it('should return an object', async () => {
+    expect(await calculateBillable()).to.be.a('object');
+  });
+
+  it('should return an object with an ok property', async () => {
+    expect(await calculateBillable()).to.have.property('ok');
+    await Billable.create({ startTime: Date.now() });
+    expect(await calculateBillable()).to.have.property('ok');
+  });
+
+  it('should return an object with a minutes property if theres a row', async () => {
+    const endTime = Date.now();
+    const startTime = endTime - 5000;
+    const totalTime = endTime - startTime;
+    await Billable.create({ startTime, endTime, totalTime });
+    expect(await calculateBillable()).to.have.property('minutes');
+  });
+
+  it('should return an object with a minutes property that is an array', async () => {
+    const endTime = Date.now();
+    const startTime = endTime - 5000;
+    const totalTime = endTime - startTime;
+    await Billable.create({ startTime, endTime, totalTime });
+    expect(await calculateBillable())
+      .to.have.property('minutes')
+      .to.be.a('array');
+  });
+
+  it('should return a minutes array with the length equal to the total rows', async () => {
+    const endTime = Date.now();
+    const startTime = endTime - 5000;
+    const totalTime = endTime - startTime;
+    await Billable.create({ startTime, endTime, totalTime });
+    expect(await calculateBillable())
+      .to.have.property('minutes')
+      .to.have.property('length', 1);
+
+    await Billable.create({ startTime, endTime, totalTime });
+    expect(await calculateBillable())
+      .to.have.property('minutes')
+      .to.have.property('length', 2);
+  });
+
+  it('should calculate minutes passed using totalTime', async () => {
+    const endTime = Date.now();
+    const startTime = endTime - 3600000;
+    const totalTime = endTime - startTime;
+
+    await Billable.create({ startTime, endTime, totalTime });
+
+    const billable = await calculateBillable();
+    expect(billable.minutes[0]).to.equal(60);
   });
 });
