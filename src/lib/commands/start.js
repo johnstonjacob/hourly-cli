@@ -8,7 +8,7 @@ const startHandler = async () => {
   if (!currentBillable.ok) {
     await startBillable();
     console.log(chalk.green(text.started));
-  }
+  } else console.log(chalk.red(text.timer_running));
 };
 
 module.exports.startHandler = startHandler;

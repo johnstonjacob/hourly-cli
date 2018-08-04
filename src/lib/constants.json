@@ -10,7 +10,7 @@
     "started": "Billable hours started.",
     "stopped": "Billable hours stopped.",
     "ended": "Ended billable period.",
-    "timer_running": "You have a current time running. Please end the timer to calculate hours.",
+    "timer_running": "You have a timer currently running." ,
     "no_timer_running": "You do not have a current timer running.",
     "report": "Billable hours report: ",
     "splash": "Hourly hours tracker"
