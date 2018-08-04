@@ -1,10 +1,11 @@
 {
   "name": "hourly-cli",
-  "version": "1.0.2",
+  "version": "1.2.0",
   "description": "Hourly time tracker",
   "main": "index.js",
   "scripts": {
     "lint": "eslint src/*",
+    "test": "NODE_ENV=test mocha src/tests/ --recursive",
     "precommit-message": "echo 'Running pre-commit hook'"
   },
   "pre-commit": [
@@ -32,10 +33,13 @@
     "sqlite3": "^4.0.2"
   },
   "devDependencies": {
+    "chai": "^4.1.2",
     "eslint": "^5.2.0",
     "eslint-config-airbnb": "^17.0.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-mocha": "^5.1.0",
+    "mocha": "^5.2.0",
     "pre-commit": "^1.2.2"
   }
 }

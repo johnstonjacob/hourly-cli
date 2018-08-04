@@ -1,9 +1,9 @@
 const homedir = require('os').homedir();
 const chalk = require('chalk');
 const Sequelize = require('sequelize');
-const { dbName } = require('./../constants.json');
+const { dbName, dbNameTest } = require('./../constants.json');
 
-const storage = `${homedir}/${dbName}`;
+const storage = `${homedir}/${process.env.NODE_ENV !== 'test' ? dbName : dbNameTest}`;
 
 const sql = new Sequelize('hourly', null, null, {
   dialect: 'sqlite',
@@ -65,6 +65,7 @@ const stopBillable = async (id, time = Date.now()) => {
 
   currentBillable.set('totalTime', totalTime);
   currentBillable.save();
+  return { ok: true };
 };
 
 const calculateBillable = async () => {
@@ -80,7 +81,8 @@ const calculateBillable = async () => {
 };
 
 const endBillablePeriod = async () => {
-  sql.dropSchema('billable_hours');
+  Billable.destroy({ where: {}, truncate: false });
+  return { ok: true };
 };
 
 sql
@@ -95,4 +97,5 @@ module.exports = {
   startBillable,
   calculateBillable,
   endBillablePeriod,
+  Billable,
 };
