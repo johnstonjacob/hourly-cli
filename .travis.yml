@@ -5,6 +5,8 @@ dist: trusty
 cache:
   directories:
     - node_modules
+notifications:
+  - email: false
 install: 
   - npm install
 script: 

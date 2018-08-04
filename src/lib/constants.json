@@ -1,14 +1,15 @@
 {
   "commands": {
     "default": "Tracks your billable hours. Input 'hourly' when you begin any billable work and type 'hourly' to stop the timer.",
-    "start": "example: \"hourly start 09:30\" sets your current clock-in to 09:30 //TODO",
-    "stop": "example \"hourly stop 10:30\" sets your current clock-out to 10:30 //TODO",
+    "start": "example: \"hourly start 01:00\" sets your current clock-in to 1 hour ago.",
+    "stop": "example \"hourly stop 01:00\" sets your current clock-out to 1 hour ago.",
     "report": "Outputs hours worked since the last pay period.",
     "end": "Outputs hours worked since the last pay period and clears the current pay period."
   },
   "text": {
     "started": "Billable hours started.",
     "stopped": "Billable hours stopped.",
+    "invalid_param": "Invalid parameter entered. Run hourly -h for help.",
     "ended": "Ended billable period.",
     "timer_running": "You have a timer currently running." ,
     "no_timer_running": "You do not have a current timer running.",
