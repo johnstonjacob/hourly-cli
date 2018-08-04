@@ -29,6 +29,8 @@ describe('minutesToHHMM', () => {
 });
 
 describe('hhmsToMs', () => {
+  const validParams = ['03:30', '3:30', '13:30', '23:59', '00:25'];
+
   it('should be a function', () => {
     expect(hhmmToMs).to.be.a('function');
   });
@@ -54,12 +56,34 @@ describe('hhmsToMs', () => {
   });
 
   it('should return ok: true when passed a valid param', () => {
-    const validParams = ['03:30', '3:30', '13:30', '23:59'];
     validParams.forEach((validParam) => {
       expect(hhmmToMs(validParam))
         .to.be.a('object')
         .with.property('ok')
         .to.equal(true);
     });
+  });
+
+  it('should return an object with a number milliseconds property when passed a valid parma', () => {
+    validParams.forEach((validParam) => {
+      expect(hhmmToMs(validParam))
+        .to.be.a('object')
+        .with.property('milliseconds')
+        .to.be.a('number');
+    });
+  });
+
+  it('should return the number of milliseconds from a passed in HH:MM', () => {
+    expect(hhmmToMs('3:30'))
+      .to.have.property('milliseconds')
+      .that.equals(12600000);
+
+    expect(hhmmToMs('8:30'))
+      .to.have.property('milliseconds')
+      .that.equals(30600000);
+
+    expect(hhmmToMs('4:15'))
+      .to.have.property('milliseconds')
+      .that.equals(15300000);
   });
 });
