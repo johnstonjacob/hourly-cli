@@ -21,6 +21,12 @@ function configSetup() {
   return { projectMode, firstRun };
 }
 
+function changeConfig(option, newValue) {
+  config.set(option, newValue);
+  return true;
+}
+
 module.exports = {
   configSetup,
+  changeConfig,
 };

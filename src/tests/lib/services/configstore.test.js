@@ -1,6 +1,6 @@
 const expect = require('chai').expect; // eslint-disable-line
 const Configstore = require('configstore');
-const { configSetup } = require('../../../lib/services/configstore');
+const { configSetup, changeConfig } = require('../../../lib/services/configstore');
 const { configTestPath } = require('../../../lib/constants.json');
 
 const config = new Configstore(configTestPath);
@@ -51,5 +51,24 @@ describe('configSetup', () => {
 
   it('should return firstRun as false if a config was set before', () => {
     expect(configSetup()).to.contain.property('firstRun').to.equal(false);
+  });
+});
+
+describe('changeConfig', () => {
+  it('should be a function', () => {
+    expect(changeConfig).to.be.a('function');
+  });
+
+  it('should return a boolean', () => {
+    expect(changeConfig()).to.be.a('boolean');
+  });
+
+  it('should change the config file.', () => {
+    changeConfig('test-config', true);
+    expect(config.get('test-config')).to.equal(true);
+    changeConfig('test-config', false);
+    expect(config.get('test-config')).to.equal(false);
+    changeConfig('project-mode', true);
+    expect(config.get('project-mode')).to.equal(true);
   });
 });
