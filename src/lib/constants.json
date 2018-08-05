@@ -4,11 +4,13 @@
     "start": "example: \"hourly start 01:00\" sets your current clock-in to 1 hour ago.",
     "stop": "example \"hourly stop 01:00\" sets your current clock-out to 1 hour ago.",
     "report": "Outputs hours worked since the last pay period.",
+    "config": "Change config options. example \"hourly config [option] [newvalue]\"",
     "end": "Outputs hours worked since the last pay period and clears the current pay period."
   },
   "text": {
     "started": "Billable hours started.",
     "stopped": "Billable hours stopped.",
+    "first_run": "No config file detected. Initializing config file with defaults.",
     "invalid_param": "Invalid parameter entered. Run hourly -h for help.",
     "ended": "Ended billable period.",
     "timer_running": "You have a timer currently running." ,
@@ -17,5 +19,6 @@
     "splash": "Hourly hours tracker"
  },
   "dbName": ".hourly.db",
-  "dbNameTest": ".hourly-tests.db"
+  "dbNameTest": ".hourly-tests.db",
+  "configTestPath": "hourly-cli.test"
 }
