@@ -9,14 +9,16 @@ const config = new Configstore(
 );
 
 function configSetup() {
-  let packageMode = config.get('package-mode');
+  let firstRun = false;
+  let projectMode = config.get('project-mode');
 
-  if (packageMode === undefined) {
-    config.set('package-mode', false);
-    packageMode = false;
+  if (projectMode === undefined) {
+    config.set('project-mode', false);
+    projectMode = false;
+    firstRun = true;
   }
 
-  return { packageMode };
+  return { projectMode, firstRun };
 }
 
 module.exports = {
