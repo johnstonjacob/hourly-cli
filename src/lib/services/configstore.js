@@ -33,7 +33,6 @@ function changeConfig(option, newValue) {
 function getConfig(option) {
   const configObject = {};
   if (option !== undefined) {
-    config.get(option);
     configObject[option] = config.get(option);
     return configObject;
   }

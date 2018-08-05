@@ -3,6 +3,7 @@ const { stopHandler } = require('./stop');
 const { reportHandler } = require('./report');
 const { endHandler } = require('./end');
 const { defaultHandler } = require('./default');
+const { configHandler } = require('./config');
 
 module.exports = {
   startHandler,
@@ -10,4 +11,5 @@ module.exports = {
   reportHandler,
   endHandler,
   defaultHandler,
+  configHandler,
 };
