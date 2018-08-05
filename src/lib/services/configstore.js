@@ -30,7 +30,19 @@ function changeConfig(option, newValue) {
   return true;
 }
 
+function getConfig(option) {
+  const configObject = {};
+  if (option !== undefined) {
+    config.get(option);
+    configObject[option] = config.get(option);
+    return configObject;
+  }
+
+  return config.all;
+}
+
 module.exports = {
   configSetup,
   changeConfig,
+  getConfig,
 };
