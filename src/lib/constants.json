@@ -4,6 +4,7 @@
     "start": "example: \"hourly start 01:00\" sets your current clock-in to 1 hour ago.",
     "stop": "example \"hourly stop 01:00\" sets your current clock-out to 1 hour ago.",
     "report": "Outputs hours worked since the last pay period.",
+    "config": "Change config options. example \"hourly config [option] [newvalue]\"",
     "end": "Outputs hours worked since the last pay period and clears the current pay period."
   },
   "text": {

@@ -3,11 +3,12 @@ const program = require('commander');
 const chalk = require('chalk');
 const { commands, text } = require('./lib/constants.json');
 const { version } = require('../package.json');
+// const { configSetup } = require('./lib/services/configstore');
 const {
-  startHandler, stopHandler, reportHandler, endHandler, defaultHandler,
+  startHandler, stopHandler, reportHandler, endHandler, defaultHandler, configHandler,
 } = require('./lib/commands/index');
 
-// require('./lib/services/configstore');
+// const config = configSetup();
 
 console.log(chalk.green.bold(text.splash));
 
@@ -41,6 +42,13 @@ program
   .action(async () => {
     await reportHandler();
     endHandler();
+  });
+
+program
+  .command('config [option] [newValue]')
+  .description(commands.config)
+  .action((option, newValue) => {
+    configHandler(option, newValue);
   });
 
 program.parse(process.argv);
