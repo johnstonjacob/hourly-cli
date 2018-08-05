@@ -1,4 +1,23 @@
-// const Configstore = require('configstore');
-// const pkg = require('../../../package.json');
+const Configstore = require('configstore');
+const pkg = require('../../../package.json');
 
-// const conf = new Configstore(pkg.name);
+const config = new Configstore(
+  process.env.NODE_ENV !== 'test'
+    ? pkg.name
+    : 'hourly-cli.test',
+);
+
+function configSetup() {
+  let packageMode = config.get('package-mode');
+
+  if (packageMode === undefined) {
+    config.set('package-mode', false);
+    packageMode = false;
+  }
+
+  return { packageMode };
+}
+
+module.exports = {
+  configSetup,
+};
