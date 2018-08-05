@@ -10,6 +10,7 @@
   "text": {
     "started": "Billable hours started.",
     "stopped": "Billable hours stopped.",
+    "first_run": "No config file detected. Initializing config file with defaults.",
     "invalid_param": "Invalid parameter entered. Run hourly -h for help.",
     "ended": "Ended billable period.",
     "timer_running": "You have a timer currently running." ,
