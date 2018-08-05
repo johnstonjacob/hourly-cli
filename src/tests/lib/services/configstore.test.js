@@ -63,11 +63,16 @@ describe('changeConfig', () => {
     expect(changeConfig()).to.be.a('boolean');
   });
 
-  it('should change the config file.', () => {
-    changeConfig('test-config', true);
-    expect(config.get('test-config')).to.equal(true);
-    changeConfig('test-config', false);
-    expect(config.get('test-config')).to.equal(false);
+  it('should return false if passed an invalid parameter', () => {
+    expect(changeConfig('shouldFail', null)).to.equal(false);
+    expect(changeConfig('shouldStillFail', 31)).to.equal(false);
+  });
+
+  it('should return false if passed an invalid newValue for the option', () => {
+    expect(changeConfig('project-mode', 35)).to.equal(false);
+  });
+
+  it('should change the config file if passed a valid parameter', () => {
     changeConfig('project-mode', true);
     expect(config.get('project-mode')).to.equal(true);
   });

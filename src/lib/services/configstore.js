@@ -2,6 +2,8 @@ const Configstore = require('configstore');
 const { configTestPath } = require('../constants.json');
 const pkg = require('../../../package.json');
 
+const validOptions = { 'project-mode': Boolean() };
+
 const config = new Configstore(
   process.env.NODE_ENV !== 'test'
     ? pkg.name
@@ -22,6 +24,8 @@ function configSetup() {
 }
 
 function changeConfig(option, newValue) {
+  if (!(option in validOptions)) return false;
+  if (typeof newValue !== typeof validOptions[option]) return false;
   config.set(option, newValue);
   return true;
 }
