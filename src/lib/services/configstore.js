@@ -1,10 +1,11 @@
 const Configstore = require('configstore');
+const { configTestPath } = require('../constants.json');
 const pkg = require('../../../package.json');
 
 const config = new Configstore(
   process.env.NODE_ENV !== 'test'
     ? pkg.name
-    : 'hourly-cli.test',
+    : configTestPath,
 );
 
 function configSetup() {

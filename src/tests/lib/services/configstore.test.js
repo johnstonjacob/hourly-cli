@@ -1,8 +1,9 @@
 const expect = require('chai').expect; // eslint-disable-line
 const Configstore = require('configstore');
 const { configSetup } = require('../../../lib/services/configstore');
+const { configTestPath } = require('../../../lib/constants.json');
 
-const config = new Configstore('hourly-cli.test');
+const config = new Configstore(configTestPath);
 
 describe('configSetup', () => {
   after(() => {
