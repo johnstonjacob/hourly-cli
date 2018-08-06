@@ -1,6 +1,6 @@
 const homedir = require('os').homedir();
-const chalk = require('chalk');
 const Sequelize = require('sequelize');
+const { error } = require('./output');
 const { dbName, dbNameTest } = require('./../constants.json');
 
 const storage = `${homedir}/${process.env.NODE_ENV !== 'test' ? dbName : dbNameTest}`;
@@ -14,8 +14,8 @@ const sql = new Sequelize('hourly', null, null, {
 
 sql
   .authenticate()
-  .catch((error) => {
-    console.log(chalk.red('Error connecting to SQLite DB.', error));
+  .catch((exception) => {
+    error('Error connecting to SQLite DB.', exception);
     process.exit(1);
   });
 
@@ -86,8 +86,8 @@ const endBillablePeriod = async () => {
 
 sql
   .sync()
-  .catch((error) => {
-    console.log(chalk.red('SQLite error', error));
+  .catch((exception) => {
+    error('SQLite error', exception);
   });
 
 module.exports = {
