@@ -1,9 +1,4 @@
-const {
-  warning,
-  error,
-  jsonOut,
-  prettifyJson,
-} = require('../services/output');
+const { warning, error, jsonOut } = require('../services/output');
 const { changeConfig, getConfig } = require('../services/configstore');
 
 function parseNewValue(newValue) {
@@ -17,7 +12,7 @@ function parseNewValue(newValue) {
 
 function configHandler(option, newValue) {
   if (!option) {
-    const config = prettifyJson(getConfig());
+    const config = getConfig();
 
     warning('Printing all configuration options.');
     jsonOut(config);
@@ -26,7 +21,7 @@ function configHandler(option, newValue) {
   }
 
   if (!newValue) {
-    const config = prettifyJson(getConfig());
+    const config = getConfig();
 
     warning(`Printing '${option}' value.`);
     jsonOut(config);
