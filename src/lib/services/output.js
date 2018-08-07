@@ -5,7 +5,7 @@ const curryRight = require('lodash/fp/curryRight');
 const log = (output) => console.log(output, '\n');
 
 const success = compose(log, chalk.green);
-const successBold = compose(log, chalk.green.bold);
+const successBold = compose(success, chalk.bold);
 const warning = compose(log, chalk.yellow);
 const stringify = curryRight(JSON.stringify);
 const prettifyJson = stringify(undefined, 2);
@@ -16,7 +16,6 @@ module.exports = {
   success,
   successBold,
   jsonOut,
-  prettifyJson,
   warning,
   error,
 };

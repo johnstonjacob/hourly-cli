@@ -15,6 +15,7 @@ describe('minutesToHHMM', () => {
     expect(minutesToHHMM(0)).to.equal('00:00');
     expect(minutesToHHMM(60)).to.equal('01:00');
     expect(minutesToHHMM(40)).to.equal('00:40');
+    expect(minutesToHHMM(602)).to.equal('10:02');
     expect(minutesToHHMM(120)).to.equal('02:00');
     expect(minutesToHHMM(150)).to.equal('02:30');
     expect(minutesToHHMM(2578)).to.equal('42:58');
