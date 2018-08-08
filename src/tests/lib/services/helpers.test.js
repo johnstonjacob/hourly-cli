@@ -1,6 +1,6 @@
 const { expect } = require('chai'); // eslint-disable-line
 
-const { minutesToHHMM, hhmmToMs } = require('../../../lib/services/helpers');
+const { minutesToHHMM, hhmmToMs, validHHMM } = require('../../../lib/services/helpers');
 
 describe('minutesToHHMM', () => {
   it('should be a function', () => {
@@ -29,62 +29,41 @@ describe('minutesToHHMM', () => {
   });
 });
 
-describe('hhmsToMs', () => {
-  const validParams = ['03:30', '3:30', '13:30', '23:59', '00:25'];
+describe('validHHMM', () => {
+  const validParams = ['3:30', '03:30', '3:03', '23:30', '23:03'];
+  const invalidParams = ['233:34', ':30'];
 
+  it('should be a function', () => {
+    expect(validHHMM).to.be.a('function');
+  });
+
+  it('should return a boolean', () => {
+    expect(validHHMM('03:30')).to.be.a('boolean');
+  });
+
+  it('should return true for valid HH:MM arguements', () => {
+    const paramTest = (x) => expect(validHHMM(x)).to.equal(true);
+    validParams.forEach(paramTest);
+  });
+
+  it('should return false for invalid HH:MM arguements', () => {
+    const paramTest = (x) => expect(validHHMM(x)).to.equal(false);
+    invalidParams.forEach(paramTest);
+  });
+});
+
+describe('hhmsToMs', () => {
   it('should be a function', () => {
     expect(hhmmToMs).to.be.a('function');
   });
 
-  it('should return an object', () => {
-    expect(hhmmToMs()).to.be.a('object');
-    expect(hhmmToMs('09:30')).to.be.a('object');
-  });
-
-  it('should return an object with an ok property', () => {
-    expect(hhmmToMs()).to.be.a('object').with.property('ok');
-    expect(hhmmToMs('09:30')).to.be.a('object').with.property('ok');
-  });
-
-  it('should return ok: false when passed an invald param', () => {
-    const invalidParams = ['03:300', '0330', true, '03:61', 330, '003:30', '0:030', '33:25'];
-    invalidParams.forEach((invalidParam) => {
-      expect(hhmmToMs(invalidParam))
-        .to.be.a('object')
-        .with.property('ok')
-        .to.equal(false);
-    });
-  });
-
-  it('should return ok: true when passed a valid param', () => {
-    validParams.forEach((validParam) => {
-      expect(hhmmToMs(validParam))
-        .to.be.a('object')
-        .with.property('ok')
-        .to.equal(true);
-    });
-  });
-
-  it('should return an object with a number milliseconds property when passed a valid parma', () => {
-    validParams.forEach((validParam) => {
-      expect(hhmmToMs(validParam))
-        .to.be.a('object')
-        .with.property('milliseconds')
-        .to.be.a('number');
-    });
+  it('should return a number ', () => {
+    expect(hhmmToMs('09:30')).to.be.a('number');
   });
 
   it('should return the number of milliseconds from a passed in HH:MM', () => {
-    expect(hhmmToMs('3:30'))
-      .to.have.property('milliseconds')
-      .that.equals(12600000);
-
-    expect(hhmmToMs('8:30'))
-      .to.have.property('milliseconds')
-      .that.equals(30600000);
-
-    expect(hhmmToMs('4:15'))
-      .to.have.property('milliseconds')
-      .that.equals(15300000);
+    expect(hhmmToMs('3:30')).to.equal(12600000);
+    expect(hhmmToMs('8:30')).to.equal(30600000);
+    expect(hhmmToMs('4:15')).to.equal(15300000);
   });
 });
