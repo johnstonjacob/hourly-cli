@@ -1,15 +1,15 @@
 const { success, error } = require('../services/output');
 const { text } = require('../constants.json');
 const { isCurrentBillable, startBillable } = require('../services/db');
-const { hhmmToMs } = require('../services/helpers');
+const { hhmmToMs, validHHMM } = require('../services/helpers');
 
 const startHandler = async (time) => {
-  const { milliseconds, ok } = hhmmToMs(time);
-  if (!ok) {
+  if (!validHHMM(time)) {
     error(text.invalid_param);
     process.exit(1);
   }
 
+  const milliseconds = hhmmToMs(time);
   const startTime = Date.now() - milliseconds;
 
   const currentBillable = await isCurrentBillable();
