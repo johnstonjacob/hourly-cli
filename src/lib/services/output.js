@@ -1,19 +1,20 @@
 const chalk = require('chalk');
+const { compose, curry } = require('ramda');
 
 const log = (output) => console.log(output, '\n');
 
-const success = (message) => log(chalk.green(message));
-const successBold = (message) => log(chalk.green.bold(message));
-const warning = (message) => log(chalk.yellow(message));
-const prettifyJson = (json) => JSON.stringify(json, undefined, 2);
-const jsonOut = (message) => log(chalk.cyan.bold(message));
-const error = (message) => log(chalk.red(message));
+const success = compose(log, chalk.green);
+const successBold = compose(success, chalk.bold);
+const warning = compose(log, chalk.yellow);
+const stringify = curry(JSON.stringify);
+const prettifyJson = (x) => stringify(x, undefined, 2);
+const jsonOut = compose(log, chalk.cyan.bold, prettifyJson);
+const error = compose(log, chalk.red);
 
 module.exports = {
   success,
   successBold,
   jsonOut,
-  prettifyJson,
   warning,
   error,
 };

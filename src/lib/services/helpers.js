@@ -1,24 +1,25 @@
-function minutesToHHMM(mins) {
-  if (mins <= 0) return '00:00';
+const { curry, map, compose } = require('ramda');
 
-  let mm = mins % 60;
-  let hh = (mins - mm) / 60;
-  if (mm.toString().length < 2) mm = `0${mm.toString()}`;
-  if (hh.toString().length < 2) hh = `0${hh.toString()}`;
+const formatHHMM = ([hh, mm]) => `${hh}:${mm}`;
+const leftPad = (x) => (x.toString().length < 2 ? `0${x.toString()}` : x.toString());
+const getHoursAndMins = (x) => [(x - (x % 60)) / 60, x % 60];
+const removeNegative = (x) => (x <= 0 ? 0 : x);
+const minutesToHHMM = compose(formatHHMM, map(leftPad), getHoursAndMins, removeNegative);
 
-  return `${hh}:${mm}`;
-}
+const validHHMMRegex = /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
+const validHHMM = validHHMMRegex.test.bind(validHHMMRegex);
 
-function hhmmToMs(hhmm) {
-  const hhmmRegex = /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
-  if (!hhmmRegex.test(hhmm)) return { ok: false };
+const split = curry((x, a) => a.split(x));
+const splitColon = split(':');
 
-  const [hh, mm] = hhmm.split(':');
+const getHourMs = (x) => x * 3600000;
+const getMinuteMs = (x) => x * 60000;
+const getTotalMs = ([hh, mm]) => getHourMs(hh) + getMinuteMs(mm);
 
-  return { ok: true, milliseconds: hh * 3600000 + mm * 60000 };
-}
+const hhmmToMs = compose(getTotalMs, splitColon);
 
 module.exports = {
   minutesToHHMM,
   hhmmToMs,
+  validHHMM,
 };
