@@ -1,6 +1,8 @@
 const { expect } = require('chai'); // eslint-disable-line
 
-const { minutesToHHMM, hhmmToMs, validHHMM } = require('../../../lib/services/helpers');
+const {
+  minutesToHHMM, hhmmToMs, validHHMM, addAllNumbers,
+} = require('../../../lib/services/helpers');
 
 describe('minutesToHHMM', () => {
   it('should be a function', () => {
@@ -65,5 +67,21 @@ describe('hhmsToMs', () => {
     expect(hhmmToMs('3:30')).to.equal(12600000);
     expect(hhmmToMs('8:30')).to.equal(30600000);
     expect(hhmmToMs('4:15')).to.equal(15300000);
+  });
+});
+
+describe('addAllNumbers', () => {
+  it('should be a function', () => {
+    expect(addAllNumbers).to.be.a('function');
+  });
+
+  it('should return a number', () => {
+    expect(addAllNumbers([1, 2, 3])).to.be.a('number');
+  });
+
+  it('should add all numbers from an array', () => {
+    expect(addAllNumbers([20, 25, 30])).to.equal(75);
+    expect(addAllNumbers([-5, -10, 5])).to.equal(-10);
+    expect(addAllNumbers([200, 300, 1000])).to.equal(1500);
   });
 });
