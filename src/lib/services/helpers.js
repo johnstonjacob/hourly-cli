@@ -1,4 +1,6 @@
-const { curry, map, compose } = require('ramda');
+const {
+  curry, map, compose, add,
+} = require('ramda');
 
 const formatHHMM = ([hh, mm]) => `${hh}:${mm}`;
 const leftPad = (x) => (x.toString().length < 2 ? `0${x.toString()}` : x.toString());
@@ -18,8 +20,11 @@ const getTotalMs = ([hh, mm]) => getHourMs(hh) + getMinuteMs(mm);
 
 const hhmmToMs = compose(getTotalMs, splitColon);
 
+const addAllNumbers = (a) => a.reduce(add);
+
 module.exports = {
   minutesToHHMM,
   hhmmToMs,
   validHHMM,
+  addAllNumbers,
 };

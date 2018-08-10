@@ -1,22 +1,22 @@
+const {
+  compose, composeP, curry, cond, propEq, T,
+} = require('ramda');
 const { success, warning } = require('../services/output');
 const { calculateBillable } = require('../services/db');
-const { minutesToHHMM } = require('../services/helpers');
+const { minutesToHHMM, addAllNumbers } = require('../services/helpers');
 const { text } = require('../constants.json');
 
+const concat = curry(text.report.concat.bind(text.report));
+const hhmm = compose(success, concat, minutesToHHMM, addAllNumbers);
 
-const reportHandler = async () => {
-  const billables = await calculateBillable();
-  if (!billables.ok) {
-    warning(text.timer_running);
-    process.exit(0);
-  }
-  const hhmm = minutesToHHMM(
-    billables
-      .minutes
-      .reduce((acc, minutes) => acc += minutes, 0)); // eslint-disable-line
+const isOk = propEq('ok', true);
 
-  success(`${text.report}${hhmm}`);
-};
+const logReport = cond([
+  [isOk, (x) => hhmm(x.minutes)],
+  [T, () => warning(text.timer_running)],
+]);
+
+const reportHandler = composeP(logReport, calculateBillable);
 
 
 module.exports.reportHandler = reportHandler;
