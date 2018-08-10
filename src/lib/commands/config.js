@@ -1,40 +1,42 @@
+const {
+  compose, cond, any, equals, all, T, propEq,
+} = require('ramda');
+const { text } = require('../constants.json');
 const { warning, error, jsonOut } = require('../services/output');
 const { changeConfig, getConfig } = require('../services/configstore');
 
-function parseNewValue(newValue) {
-  try {
-    if (typeof JSON.parse(newValue) === 'boolean') return Boolean(newValue);
-  } catch (exception) {
-    return newValue;
-  }
-  return newValue;
-}
+const isUndefined = equals(undefined);
+const anyUndefined = any(isUndefined);
+const allUndefined = all(isUndefined);
 
-function configHandler(option, newValue) {
-  if (!option) {
-    const config = getConfig();
+const warnAndPass = (x) => {
+  warning(text.print_config);
+  return x;
+};
 
-    warning('Printing all configuration options.');
-    jsonOut(config);
+const allUndefinedHandler = compose(jsonOut, warnAndPass, getConfig);
 
-    process.exit(0);
-  }
+const printValueAndPass = (x) => {
+  warning(text.print_value);
+  return x;
+};
 
-  if (!newValue) {
-    const config = getConfig();
+const valueUndefinedHandler = compose(jsonOut, printValueAndPass, getConfig);
 
-    warning(`Printing '${option}' value.`);
-    jsonOut(config);
+const isOk = propEq('ok', true);
 
-    process.exit(0);
-  }
+const configChangeOutput = cond([
+  [isOk, ({ option, value }) => warning(`Changed ${option} to ${value}`)],
+  [T, () => error('Invalid option or parameter')],
+]);
 
-  const value = parseNewValue(newValue);
-  const ok = changeConfig(option, value);
+const configChangeHandler = compose(configChangeOutput, changeConfig);
 
-  if (ok) warning(`Changed ${option} to ${newValue}`);
-  else error('Invalid option or paraemter');
-}
+const configHandler = cond([
+  [allUndefined, allUndefinedHandler],
+  [anyUndefined, valueUndefinedHandler],
+  [T, configChangeHandler],
+]);
 
 module.exports = {
   configHandler,

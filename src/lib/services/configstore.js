@@ -2,7 +2,7 @@ const Configstore = require('configstore');
 const { configTestPath } = require('../constants.json');
 const pkg = require('../../../package.json');
 
-const validOptions = { 'project-mode': Boolean() };
+const validOptions = { 'project-mode': ['true', 'false'] };
 
 const config = new Configstore(
   process.env.NODE_ENV !== 'test'
@@ -23,20 +23,19 @@ function configSetup() {
   return { projectMode, firstRun };
 }
 
-function changeConfig(option, newValue) {
-  if (!(option in validOptions)) return false;
-  if (typeof newValue !== typeof validOptions[option]) return false;
+function changeConfig([option, newValue]) {
+  if (!(option in validOptions)) return { ok: false };
+  if (!validOptions[option].includes(newValue)) return { ok: false };
   config.set(option, newValue);
-  return true;
+  return { ok: true, option, value: newValue };
 }
 
-function getConfig(option) {
+function getConfig([option]) {
   const configObject = {};
   if (option !== undefined) {
     configObject[option] = config.get(option);
     return configObject;
   }
-
   return config.all;
 }
 

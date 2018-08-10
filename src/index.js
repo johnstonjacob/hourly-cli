@@ -43,7 +43,7 @@ program
 program
   .command('config [option] [newValue]')
   .description(commands.config)
-  .action(configHandler);
+  .action((option, newValue) => configHandler([option, newValue]));
 
 program.parse(process.argv);
 
