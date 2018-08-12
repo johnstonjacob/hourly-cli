@@ -54,7 +54,7 @@ const startBillable = async (startTime = Date.now()) => {
   return { ok: true };
 };
 
-const stopBillable = async (id, time = Date.now()) => {
+const stopBillable = async ({ id }, time = Date.now()) => {
   const currentBillable = await Billable.findById(id);
   currentBillable.set('endTime', time);
 
