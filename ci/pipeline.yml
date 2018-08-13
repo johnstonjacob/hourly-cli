@@ -4,17 +4,11 @@ resource_types:
     source:
       repository: ymedlop/npm-cache-resource
       tag: latest
-  - name: github-status                         
-    type: docker-image                          
-    source:                                       
-      repository: dpb587/github-status-resource 
-      tag: master                               
-resources:
-  - name: repo-status
-    type: github-status
+  - name: pull-request
+    type: docker-image
     source:
-      repository: https://github.com/johnstonjacob/hourly-cli
-      access_token: ((repo_github_token))
+      repository: jtarchie/pr
+resources:
   - name: hourly-cli
     type: git
     source: &repo-source
@@ -26,17 +20,19 @@ resources:
       <<: *repo-source
       paths:
         - package.json
+  - name: git-pr
+    type: git
+    source:
+      uri: git@github.com:johnstonjacob/hourly-cli
+      branch: master
+      access_token: (())
 jobs:
-  - name: install
+  - name: Install node_modules
     plan:
       - get: hourly-cli
         trigger: true
       - get: dependency-cache
-      - put: repo-status
-        params:
-          state: pending
-          commit: hourly-cli
-  - name: test
+  - name: Run tests 
     plan:
       - get: hourly-cli
         trigger: true
@@ -45,13 +41,3 @@ jobs:
         passed: [install]
       - task: run the test suite
         file: hourly-cli/ci/tasks/run_tests.yml
-        on_failure:
-          put: repo-status
-          params:
-            state: failure
-            commit: hourly-cli
-        on_success:
-          put: repo-status
-          params:
-            state: success
-            commit: hourly-cli

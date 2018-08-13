@@ -8,7 +8,7 @@ image_resource:
     tag: latest
 
 inputs:
-  - name: hourly-cli
+  - name: git
   - name: dependency-cache
 
 run:
