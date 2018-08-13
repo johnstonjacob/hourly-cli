@@ -8,8 +8,8 @@ image_resource:
     tag: latest
 
 inputs:
-  - name: hourly_cli
+  - name: hourly-cli
   - name: dependency-cache
 
 run:
-  path: hourly_cli/ci/scripts/run_tests.sh
+  path: hourly-cli/ci/scripts/run_tests.sh
