@@ -21,7 +21,7 @@ jobs:
       - get: dependency-cache
         passed: [Install_node_modules]
       - task: run-test
-        file: hourly-cli/ci/tasks/run_tests.yml
+        file: git/ci/tasks/run_tests.yml
 
   - name: test-pr
     public: true
@@ -33,7 +33,7 @@ jobs:
           path: git-pull-requests
           status: pending
       - task: test-pr
-        file: hourly-cli/ci/tasks/run_tests.yml
+        file: git/ci/tasks/run_tests.yml
         on_success:
           put: git-pull-requests
           params:
