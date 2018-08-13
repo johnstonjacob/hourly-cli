@@ -1,6 +1,6 @@
 # Hourly time tracker CLI
 [![npm version](https://badge.fury.io/js/hourly-cli.svg)](https://badge.fury.io/js/hourly-cli)
-[![Build Status](https://travis-ci.org/johnstonjacob/hourly-cli.svg?branch=master)](https://travis-ci.org/johnstonjacob/hourly-cli)
+[![Build Status](https://ci.johnstonjacob.com/api/badges/johnstonjacob/hourly-cli/status.svg)
 [![dependencies Status](https://david-dm.org/johnstonjacob/hourly-cli/status.svg)](https://david-dm.org/johnstonjacob/hourly-cli)
 [![devDependencies Status](https://david-dm.org/johnstonjacob/hourly-cli/dev-status.svg)](https://david-dm.org/johnstonjacob/hourly-cli?type=dev)
 
@@ -14,3 +14,4 @@ hourly stop [time] - stop billable hours. [time] is the amount of time since you
 hourly report - prints amount of hours worked in this period
 
 hourly end - prints all hours worked for this pay period and ends the pay period
+
