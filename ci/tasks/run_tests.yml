@@ -12,4 +12,4 @@ inputs:
   - name: dependency-cache
 
 run:
-  path: hourly-cli/ci/scripts/run_tests.sh
+  path: git/ci/scripts/run_tests.sh
