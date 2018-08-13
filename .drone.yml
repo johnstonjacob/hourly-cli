@@ -1,14 +1,14 @@
 pipeline:
   build:
     image: node:8
-    cache:
-      mount:
-        - node_modules
-        - .git
     commands:
       - npm install
       - npm run test
       - npm run lint
+  cache:
+    mount:
+      - node_modules
+      - .git
   slack:
     image: plugins/slack
     username: drone
