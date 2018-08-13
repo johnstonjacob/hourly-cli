@@ -5,10 +5,6 @@ pipeline:
       - npm install
       - npm run test
       - npm run lint
-  cache:
-    mount:
-      - node_modules
-      - .git
   slack:
     image: plugins/slack
     username: drone
@@ -22,3 +18,7 @@ pipeline:
       {{else}}
         build {{build.number}} failed.
       {{/success}}
+cache:
+  mount:
+    - node_modules
+    - .git
