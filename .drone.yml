@@ -13,7 +13,7 @@ pipeline:
     when: 
       status: [ success, failure ]
     template: >
-      {{$success build.status}}
+      {{#success build.status}}
         build {{build.number}} succeeded.
       {{else}}
         build {{build.number}} failed.
