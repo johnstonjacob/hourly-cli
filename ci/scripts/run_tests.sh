@@ -2,5 +2,5 @@
 
 set -e -u -x
 
-mv dependency-cache/node_modules hourly_cli
-cd hourly_cli && npm test && npm run lint
+mv dependency-cache/node_modules hourly-cli
+cd hourly-cli && npm test && npm run lint
