@@ -1,19 +1,4 @@
 ---
-meta:
-  name: hourly-cli-pr
-  target: jake
-  url: https://ci.johnstonjacob.com
-  pipeline: hourly-cli
-
-  image:    starkandwayne/concourse
-
-  github:
-    uri: git@github.com:johnstonjacob/hourly-cli
-    owner: johnstonjacob
-    repo: hourly-cli
-    branch: master
-    access_token: ((repo_github_token))
-
 groups:
   - name: hourly-cli
     jobs:
@@ -76,15 +61,15 @@ resources:
   - name: git
     type: git
     source: &repo-source
-      uri:         (( grab meta.github.uri ))
-      branch:      (( grab meta.github.branch ))
+      uri: https://github.com/johnstonjacob/hourly-cli
+      branch: master
 
   - name: git-pull-requests
     type: pull-request
     source:
-      access_token: (( grab meta.github.access_token ))
-      repo:         (( concat meta.github.owner "/" meta.github.repo ))
-      base:         (( grab meta.github.branch ))
+      access_token: ((repo_github_token))
+      repo: johnstonjacob/hourly-cli
+
   - name: dependency-cache
     type: npm-cache
     source:
