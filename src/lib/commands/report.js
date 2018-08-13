@@ -1,4 +1,4 @@
-const chalk = require('chalk');
+const { success, warning } = require('../services/output');
 const { calculateBillable } = require('../services/db');
 const { minutesToHHMM } = require('../services/helpers');
 const { text } = require('../constants.json');
@@ -7,7 +7,7 @@ const { text } = require('../constants.json');
 const reportHandler = async () => {
   const billables = await calculateBillable();
   if (!billables.ok) {
-    console.log(chalk.yellow(text.timer_running));
+    warning(text.timer_running);
     process.exit(0);
   }
   const hhmm = minutesToHHMM(
@@ -15,8 +15,7 @@ const reportHandler = async () => {
       .minutes
       .reduce((acc, minutes) => acc += minutes, 0)); // eslint-disable-line
 
-  process.stdout.write(chalk.green(text.report));
-  console.log(chalk.bgRed.bold.white(hhmm));
+  success(`${text.report}${hhmm}`);
 };
 
 
