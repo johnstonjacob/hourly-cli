@@ -1,21 +1,21 @@
 ---
 meta:
-  name: hourly-cli
+  name: hourly-cli-pr
   target: jake
   url: https://ci.johnstonjacob.com
-  pipeline: (( grab meta.name ))
+  pipeline: hourly-cli
 
   image:    starkandwayne/concourse
 
   github:
-    uri:          (( concat "git@github.com:" meta.github.owner "/" meta.github.repo ))
+    uri: git@github.com:johnstonjacob/hourly-cli
     owner: johnstonjacob
     repo: hourly-cli
     branch: master
     access_token: ((repo_github_token))
 
 groups:
-  - name: (( grab meta.pipeline ))
+  - name: hourly-cli
     jobs:
       - test-master
       - test-pr
