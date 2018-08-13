@@ -35,7 +35,7 @@ jobs:
       - put: repo-status
         params:
           state: pending
-          commit: repo
+          commit: hourly-cli
   - name: test
     plan:
       - get: hourly-cli
@@ -49,9 +49,9 @@ jobs:
           put: repo-status
           params:
             state: failure
-            commit: repo
+            commit: hourly-cli
         on_success:
           put: repo-status
           params:
             state: success
-            commit: repo
+            commit: hourly-cli
