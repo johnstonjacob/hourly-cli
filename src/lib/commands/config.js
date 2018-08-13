@@ -1,10 +1,15 @@
-const chalk = require('chalk');
+const {
+  warning,
+  error,
+  jsonOut,
+  prettifyJson,
+} = require('../services/output');
 const { changeConfig, getConfig } = require('../services/configstore');
 
 function parseNewValue(newValue) {
   try {
     if (typeof JSON.parse(newValue) === 'boolean') return Boolean(newValue);
-  } catch (error) {
+  } catch (exception) {
     return newValue;
   }
   return newValue;
@@ -12,19 +17,19 @@ function parseNewValue(newValue) {
 
 function configHandler(option, newValue) {
   if (!option) {
-    const config = JSON.stringify(getConfig(), undefined, 2);
+    const config = prettifyJson(getConfig());
 
-    console.log(chalk.yellow('Printing all configuration options.\n'));
-    console.log(chalk.cyan.bold(config));
+    warning('Printing all configuration options.');
+    jsonOut(config);
 
     process.exit(0);
   }
 
   if (!newValue) {
-    const config = JSON.stringify(getConfig(option), undefined, 2);
+    const config = prettifyJson(getConfig());
 
-    console.log(chalk.yellow(`Printing ${option} option.\n`));
-    console.log(chalk.cyan.bold(config));
+    warning(`Printing '${option}' value.`);
+    jsonOut(config);
 
     process.exit(0);
   }
@@ -32,8 +37,8 @@ function configHandler(option, newValue) {
   const value = parseNewValue(newValue);
   const ok = changeConfig(option, value);
 
-  if (ok) console.log(chalk.yellow(`Changed ${option} to ${newValue}`));
-  else console.log(chalk.red('Invalid option or paraemter'));
+  if (ok) warning(`Changed ${option} to ${newValue}`);
+  else error('Invalid option or paraemter');
 }
 
 module.exports = {
