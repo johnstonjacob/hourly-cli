@@ -1,6 +1,6 @@
 {
   "name": "hourly-cli",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Hourly time tracker",
   "main": "index.js",
   "scripts": {
