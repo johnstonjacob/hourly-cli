@@ -1,0 +1,78 @@
+---
+groups:
+  - name: hourly-cli
+    jobs:
+      - test-master
+      - test-pr
+      - Install_node_modules
+
+jobs:
+  - name: Install_node_modules
+    plan:
+      - get: git
+        trigger: true
+      - get: dependency-cache
+  - name: test-master
+    public: true
+    plan:
+      - get: git
+        trigger: true
+        passed: [Install_node_modules]
+      - get: dependency-cache
+        passed: [Install_node_modules]
+      - task: run-test
+        file: hourly-cli/ci/tasks/run_tests.yml
+
+  - name: test-pr
+    public: true
+    plan:
+      - { get: git }
+      - { get: git-pull-requests, trigger: true, version: every }
+      - put: git-pull-requests
+        params:
+          path: git-pull-requests
+          status: pending
+      - task: test-pr
+        file: hourly-cli/ci/tasks/run_tests.yml
+        on_success:
+          put: git-pull-requests
+          params:
+            path: git-pull-requests
+            status: success
+        on_failure:
+          put: git-pull-requests
+          params:
+            path: git-pull-requests
+            status: failure
+
+resource_types:
+  - name: npm-cache
+    type: docker-image
+    source:
+      repository: ymedlop/npm-cache-resource
+      tag: latest
+  - name: pull-request
+    type: docker-image
+    source:
+      repository: jtarchie/pr
+      # repository: drnic/pullrequest-resource
+
+resources:
+  - name: git
+    type: git
+    source: &repo-source
+      uri: https://github.com/johnstonjacob/hourly-cli
+      branch: master
+
+  - name: git-pull-requests
+    type: pull-request
+    source:
+      access_token: ((repo_github_token))
+      repo: johnstonjacob/hourly-cli
+
+  - name: dependency-cache
+    type: npm-cache
+    source:
+      <<: *repo-source
+      paths:
+        - package.json

@@ -1,20 +1,19 @@
 #!/usr/bin/env node
 const program = require('commander');
-const chalk = require('chalk');
+const { successBold, warning } = require('./lib/services/output');
 const { configSetup } = require('./lib/services/configstore');
 const { commands, text } = require('./lib/constants.json');
 const { version } = require('../package.json');
-// const { configSetup } = require('./lib/services/configstore');
 const {
   startHandler, stopHandler, reportHandler, endHandler, defaultHandler, configHandler,
 } = require('./lib/commands/index');
 
 const config = configSetup();
 
-console.log(chalk.green.bold(text.splash));
+successBold(text.splash);
 
 if (config.firstRun) {
-  console.log(chalk.yellow(text.first_run));
+  warning(text.first_run);
 }
 
 
