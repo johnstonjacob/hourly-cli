@@ -1,0 +1,20 @@
+pipeline:
+  build:
+    image: node:8
+    commands:
+      - npm install
+      - npm run test
+      - npm run lint
+  slack:
+    image: plugins/slack
+    username: drone
+    channel: hourly-cli
+    secrets: [ slack_webhook ]
+    when: 
+      status: [ success, failure ]
+    template: >
+      {{$success build.status}}
+      build {{build.number}} succeeded.
+      {{else}}
+      build {{build.number}} failed.
+      {{/success}}
