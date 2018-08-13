@@ -20,9 +20,11 @@ pipeline:
       {{else}}
         build {{build.number}} failed.
       {{/success}}
-    cache:
-      mount:
-        - node_modules
-        - .git
+  npm:
+    image: plugins/npm
+    secrets: [ npm_token ]
+    email: jacob@johnstonjacob.com
+    when:
+      branch: master
 branches:
   include: [ master, dev, feature/* ]
