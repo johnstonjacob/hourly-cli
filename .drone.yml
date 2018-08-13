@@ -1,10 +1,10 @@
 pipeline:
-  cache:
-    mount:
-      - node_modules
-      - .git
   build:
     image: node:8
+    cache:
+      mount:
+        - node_modules
+        - .git
     commands:
       - npm install
       - npm run test
