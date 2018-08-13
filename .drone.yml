@@ -6,6 +6,8 @@ pipeline:
       - npm run test
       - npm run lint
   slack:
+    when:
+      event: [ push ]
     image: plugins/slack
     username: drone
     channel: hourly-cli
