@@ -16,7 +16,7 @@
     "timer_running": "You have a timer currently running." ,
     "no_timer_running": "You do not have a current timer running.",
     "report": "Billable hours report: ",
-    "splash": "Hourly hours tracker"
+    "splash": "Hourly - Billable Hours Tracker"
  },
   "dbName": ".hourly.db",
   "dbNameTest": ".hourly-tests.db",
