@@ -1,4 +1,8 @@
 pipeline:
+  cache:
+    mount:
+      - node_modules
+      - .git
   build:
     image: node:8
     commands:
