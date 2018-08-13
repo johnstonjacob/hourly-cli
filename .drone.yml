@@ -24,3 +24,5 @@ pipeline:
       mount:
         - node_modules
         - .git
+branches:
+  include: [ master, dev, feature/* ]
